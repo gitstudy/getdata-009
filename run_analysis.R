@@ -18,8 +18,8 @@
       colnames(sub) = "Subject"
       act <- rbind(ytrain,ytest)
       colnames(act) = "ActID"
-      meancols <- xdata[,grep("mean()",colnames(xdata))]
-      stdcols <- xdata[,grep("std()",colnames(xdata))]
+      meancols <- xdata[,grep("mean\\(\\)",colnames(xdata))]
+      stdcols <- xdata[,grep("std\\(\\)",colnames(xdata))]
       data <- cbind(sub,act,meancols,stdcols)
 
 #STEP 3: Uses descriptive activity names to name the activities in the data set
@@ -30,18 +30,22 @@
       data$Activity[data$ActID == 4] <-  "SITTING"
       data$Activity[data$ActID == 5] <-  "STANDING"
       data$Activity[data$ActID == 6] <-  "LAYING"
-
-#STEP 4. Appropriately labels the data set with descriptive variable names. 
       library(dplyr)
-      d2 <- select(data, -ActID)
-      names(d2) <- gsub("-", "_", names(d2))
-      names(d2) <- gsub("()", "", names(d2), fixed = TRUE)
+      data2 <- select(data, -ActID)
+            
+#STEP 4. Appropriately labels the data set with descriptive variable names. 
+      names(data2) <- gsub("-", "", names(data2))
+      names(data2) <- gsub("()", "", names(data2), fixed = TRUE)
+      names(data2) <- gsub("tBody", "timeBody", names(data2))
+      names(data2) <- gsub("fBody", "freqBody", names(data2))
+      names(data2) <- gsub("tGravity", "timeGravity", names(data2))
+      names(data2) <- gsub("mean", "Mean", names(data2))
+      names(data2) <- gsub("std", "Std", names(data2))
 
 #STEP 5: From the data set in step 4, creates a second, independent tidy data set 
       #with the average of each variable for each activity and each subject.
       library(reshape2)
-      molten <- melt(d2, id.vars = c("Subject", "Activity"))
-      final <- dcast(molten, Subject + Activity ~variable, fun = mean)
-      write.table(final, file = "tidy_data.txt", row.name = FALSE)
+      molten <- melt(data2, id.vars = c("Subject", "Activity"))
+      final_data <- dcast(molten, Subject + Activity ~variable, fun = mean)
+      write.table(final_data, file = "tidy_data.txt", row.name = FALSE)
       
-#======CODE=ENDS=HERE=====================================================
