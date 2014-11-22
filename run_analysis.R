@@ -46,6 +46,6 @@
       #with the average of each variable for each activity and each subject.
       library(reshape2)
       molten <- melt(data2, id.vars = c("Subject", "Activity"))
-      final_data <- dcast(molten, Subject + Activity ~variable, fun = mean)
-      write.table(final_data, file = "tidy_data.txt", row.name = FALSE)
+      tidy_data <- dcast(molten, Subject + Activity ~variable, fun = mean)
+      write.table(tidy_data, file = "tidy_data.txt", row.name = FALSE)
       
