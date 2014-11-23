@@ -30,6 +30,7 @@
       data$Activity[data$ActID == 4] <-  "SITTING"
       data$Activity[data$ActID == 5] <-  "STANDING"
       data$Activity[data$ActID == 6] <-  "LAYING"
+      install.packages("dplyr")
       library(dplyr)
       data2 <- select(data, -ActID)
             
@@ -44,6 +45,7 @@
 
 #STEP 5: From the data set in step 4, creates a second, independent tidy data set 
       #with the average of each variable for each activity and each subject.
+      install.packages("reshape2")
       library(reshape2)
       molten <- melt(data2, id.vars = c("Subject", "Activity"))
       tidy_data <- dcast(molten, Subject + Activity ~variable, fun = mean)
