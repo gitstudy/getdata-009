@@ -25,9 +25,8 @@ In this step, the feature variables were re-labeled to ensure the meta character
 STEP 5: From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 In this step, the obesevations for each selected feature variable were averaged over the 'Subject' and 'Activity' variable using the 'melt' and 'dcast' functions. Since these functions use 'reshape2' library package, this package was initially installed to run the operations. The tidy data set is then stored in 'tidy_data' variable. 
 
-write.table(tidy_data, file = "tidy_data.txt", row.name = FALSE)
-
 At the end of the tidy data set, the final data table is transferred to 'tidy_data.txt' using the 'write.table' function. 
+
 The file contains data for following variables: 
 Subject
 Activity
